@@ -35,7 +35,6 @@ export const ContractForm: React.FC<ContractFormProps> = ({
 
   useEffect(() => {
     if (selectedBlueprint) {
-      // Initialize field values from blueprint fields
       const initialValues: ContractFieldValue[] = selectedBlueprint.fields.map(
         (field) => ({
           fieldId: field.id,

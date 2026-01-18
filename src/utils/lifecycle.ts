@@ -36,7 +36,6 @@ export function canEditContract(status: ContractStatus): boolean {
 
 export function getNextStatus(currentStatus: ContractStatus): ContractStatus | null {
   const transitions = getAvailableTransitions(currentStatus);
-  // Return the first non-revoked transition, or null
   const next = transitions.find(s => s !== 'revoked');
   return next ?? null;
 }

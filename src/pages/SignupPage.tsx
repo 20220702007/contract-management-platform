@@ -17,7 +17,6 @@ export const SignupPage: React.FC = () => {
     e.preventDefault();
     setError(null);
 
-    // Validation
     if (!username.trim() || !email.trim() || !password.trim()) {
       setError('Please fill in all fields');
       return;
@@ -33,7 +32,6 @@ export const SignupPage: React.FC = () => {
       return;
     }
 
-    // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError('Please enter a valid email address');

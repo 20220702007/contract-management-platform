@@ -29,7 +29,6 @@ export const FieldLibraryManager: React.FC = () => {
       isSpecial,
     });
 
-    // Reset form
     setLabel('');
     setDescription('');
     setCategory('');

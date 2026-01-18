@@ -5,7 +5,7 @@ export interface User {
   id: string;
   username: string;
   email: string;
-  password: string; // In real app, this would be hashed
+  password: string;
   createdAt: string;
 }
 
@@ -48,20 +48,19 @@ export const useAuthStore = create<AuthState>((set) => ({
   signup: (username: string, email: string, password: string) => {
     const users = loadUsers();
 
-    // Check if username or email already exists
     if (users.some((u) => u.username === username)) {
-      return false; // Username already exists
+      return false;
     }
 
     if (users.some((u) => u.email === email)) {
-      return false; // Email already exists
+      return false;
     }
 
     const newUser: User = {
       id: `user-${Date.now()}`,
       username,
       email,
-      password, // In real app, hash this password
+      password,
       createdAt: new Date().toISOString(),
     };
 

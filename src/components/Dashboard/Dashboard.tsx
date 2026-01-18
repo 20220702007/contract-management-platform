@@ -46,7 +46,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </Button>
       </div>
 
-      {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white shadow-professional shadow-professional-hover">
           <div className="flex items-center justify-between">

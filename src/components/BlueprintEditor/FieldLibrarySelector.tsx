@@ -32,7 +32,6 @@ export const FieldLibrarySelector: React.FC<FieldLibrarySelectorProps> = ({ onSe
       x: parseInt(x) || 50,
       y: parseInt(y) || 100,
     });
-    // Reset position after adding
     setY((prev) => (parseInt(prev) + 50).toString());
   };
 
