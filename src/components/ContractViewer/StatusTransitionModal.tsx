@@ -52,15 +52,24 @@ export const StatusTransitionModal: React.FC<StatusTransitionModalProps> = ({
               No status transitions available for this contract.
             </p>
           ) : (
-            <Select
-              label="New Status"
-              value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value as ContractStatus)}
-              options={[
-                { value: '', label: '-- Select Status --' },
-                ...options,
-              ]}
-            />
+            <>
+              <Select
+                label="New Status"
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value as ContractStatus)}
+                options={[
+                  { value: '', label: '-- Select Status --' },
+                  ...options,
+                ]}
+              />
+              {selectedStatus === 'signed' && (
+                <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                  <p className="text-sm text-yellow-800">
+                    <strong>Note:</strong> When a contract is signed, it will automatically be locked and cannot be edited.
+                  </p>
+                </div>
+              )}
+            </>
           )}
         </div>
 

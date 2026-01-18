@@ -26,6 +26,13 @@ export const useContractsStore = create<ContractsState>((set, get) => ({
   },
 
   updateContract: (id: string, updates: Partial<Contract>) => {
+    const contract = get().contracts.find((c) => c.id === id);
+    if (!contract) return;
+
+    if (contract.status === 'locked' || contract.status === 'revoked') {
+      return;
+    }
+
     set((state) => ({
       contracts: state.contracts.map((contract) =>
         contract.id === id
@@ -44,18 +51,31 @@ export const useContractsStore = create<ContractsState>((set, get) => ({
       return false;
     }
 
-    set((state) => ({
-      contracts: state.contracts.map((c) =>
-        c.id === id
-          ? { ...c, status: newStatus, updatedAt: getCurrentDateTime() }
-          : c
-      ),
-    }));
+    set((state) => {
+      const updatedContracts = state.contracts.map((c) => {
+        if (c.id === id) {
+          const updatedContract = { ...c, status: newStatus, updatedAt: getCurrentDateTime() };
+          
+          if (newStatus === 'signed') {
+            return { ...updatedContract, status: 'locked', updatedAt: getCurrentDateTime() };
+          }
+          
+          return updatedContract;
+        }
+        return c;
+      });
+      
+      return { contracts: updatedContracts };
+    });
     get().saveContracts();
     return true;
   },
 
   deleteContract: (id: string) => {
+    const contract = get().contracts.find((c) => c.id === id);
+    if (contract && (contract.status === 'locked' || contract.status === 'revoked')) {
+      return;
+    }
     set((state) => ({
       contracts: state.contracts.filter((c) => c.id !== id),
     }));

@@ -52,6 +52,9 @@ export const ContractViewer: React.FC<ContractViewerProps> = ({
     party?: string;
     fieldValues: any[];
   }) => {
+    if (contract.status === 'locked' || contract.status === 'revoked') {
+      return;
+    }
     updateContract(contractId, updates);
     setIsEditing(false);
   };
@@ -128,13 +131,26 @@ export const ContractViewer: React.FC<ContractViewerProps> = ({
             disabled={true}
           />
 
-          <div className="border-t pt-4">
-            <h3 className="text-lg font-semibold mb-2">Status Management</h3>
-            <LifecycleControls
-              currentStatus={contract.status}
-              onStatusChange={handleStatusChange}
-            />
-          </div>
+          {contract.status !== 'locked' && contract.status !== 'revoked' && (
+            <div className="border-t pt-4">
+              <h3 className="text-lg font-semibold mb-2">Status Management</h3>
+              <LifecycleControls
+                currentStatus={contract.status}
+                onStatusChange={handleStatusChange}
+              />
+            </div>
+          )}
+          {(contract.status === 'locked' || contract.status === 'revoked') && (
+            <div className="border-t pt-4">
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <p className="text-sm text-gray-600">
+                  {contract.status === 'locked' 
+                    ? 'This contract is locked and cannot be edited or have its status changed.'
+                    : 'This contract is revoked and cannot be edited or have its status changed.'}
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
